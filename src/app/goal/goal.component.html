@@ -1,0 +1,32 @@
+<style>
+  .paper:hover{
+    box-shadow: 2px 10px 10px 0;
+
+  }
+</style>
+<body>
+  <div class="container">
+    <h1>My Goals</h1>
+    <hr>
+  
+    <div class="row">
+      <div class="col-md-6">
+        <div *ngFor='let goal of goals;let i = index' class="">
+          <div class="card paper" style="margin: 10px;padding: 30px 10px;background-color: burlywood; box-shadow: 1px 4px 4px 0;">
+            <h4 id={{i}} appStrikethrough>{{goal.name}} due on {{goal.completeDate|date|uppercase}}</h4>
+            <button (click)='toggleDetails(i)' class="btn btn-primary">Toggle Details</button>
+          </div>
+  
+          <div *ngIf='goal.showDescription' class="card" style="background-color: rgb(157, 212, 214, 05);padding: 15px 10px; box-shadow: 2px 5px 5px 0;">
+            <app-goal-detail  [goal]='goal' (isComplete) = 'deleteGoal($event,i)'></app-goal-detail>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <app-goal-form (addGoal)="addNewGoal($event)"></app-goal-form>
+      </div>
+    </div>
+  
+    <p *ngIf='goals.length > 5'>You have too many goals</p>
+  </div>
+</body>
